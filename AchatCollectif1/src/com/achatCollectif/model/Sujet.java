@@ -12,9 +12,9 @@ public class Sujet {
 	private Date dateExtra;
 	private String image;
 	private String note;
-	private Client propietaire;
-	private Categorie categorie;
-	private List<Client> listAdherent;
+	private String idUser;
+	private String idCategorie;
+	private List<String> listAdherent;
 	private List<String> listCommentaire;
 	
 	
@@ -24,13 +24,13 @@ public class Sujet {
 		return "Sujet [id=" + id + ", libelle=" + libelle + ", description="
 				+ description + ", prix=" + prix + ", dateDepo=" + dateDepo
 				+ ", dateExtra=" + dateExtra + ", image=" + image + ", note="
-				+ note + ", propietaire=" + propietaire + ", categorie="
-				+ categorie + ", listAdherent=" + listAdherent
+				+ note + ", propietaire=" + idUser + ", categorie="
+				+ idCategorie + ", listAdherent=" + listAdherent
 				+ ", listCommentaire=" + listCommentaire + "]";
 	}
 	public Sujet(String id, String libelle, String description, double prix,
 			Date dateDepo, Date dateExtra, String image, String note,
-			Client propietaire, Categorie categorie) {
+			String idUser, String idCategorie) {
 		super();
 		this.id = id;
 		this.libelle = libelle;
@@ -40,12 +40,12 @@ public class Sujet {
 		this.dateExtra = dateExtra;
 		this.image = image;
 		this.note = note;
-		this.propietaire = propietaire;
-		this.categorie = categorie;
+		this.idUser = idUser;
+		this.idCategorie = idCategorie;
 	}
 	public Sujet(String id, String libelle, String description, double prix,
 			Date dateDepo, Date dateExtra, String image, String note,
-			Client propietaire, Categorie categorie, List<Client> listAdherent,
+			String idUser, String idCategorie, List<String> listAdherent,
 			List<String> listCommentaire) {
 		super();
 		this.id = id;
@@ -56,8 +56,8 @@ public class Sujet {
 		this.dateExtra = dateExtra;
 		this.image = image;
 		this.note = note;
-		this.propietaire = propietaire;
-		this.categorie = categorie;
+		this.idUser = idUser;
+		this.idCategorie = idCategorie;
 		this.listAdherent = listAdherent;
 		this.listCommentaire = listCommentaire;
 	}
@@ -113,22 +113,22 @@ public class Sujet {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	public Client getPropietaire() {
-		return propietaire;
+	public String getPropietaire() {
+		return idUser;
 	}
-	public void setPropietaire(Client propietaire) {
-		this.propietaire = propietaire;
+	public void setPropietaire(String idUser) {
+		this.idUser = idUser;
 	}
-	public Categorie getCategorie() {
-		return categorie;
+	public String getCategorie() {
+		return idCategorie;
 	}
-	public void setCategorie(Categorie categorie) {
-		this.categorie = categorie;
+	public void setCategorie(String idCategorie) {
+		this.idCategorie = idCategorie;
 	}
-	public List<Client> getListAdherent() {
+	public List<String> getListAdherent() {
 		return listAdherent;
 	}
-	public void setListAdherent(List<Client> listAdherent) {
+	public void setListAdherent(List<String> listAdherent) {
 		this.listAdherent = listAdherent;
 	}
 	public List<String> getListCommentaire() {

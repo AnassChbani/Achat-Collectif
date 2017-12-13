@@ -1,16 +1,15 @@
 package com.achatCollectif.model;
 
-public class Administrateur extends Client{
+public class Administrateur extends User{
 
 	public Administrateur() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Administrateur(String id, String nom, String prenom, String cin,
-			String email) {
-		super(id, nom, prenom, cin, email);
-		// TODO Auto-generated constructor stub
-	}
+	public Administrateur(String id, String nom, String prenom, String cin, String email, String password) {
+		super(id, nom, prenom, cin, email, password);
+		this.estAdmin = true;
+	}	
+	
 	
 }
