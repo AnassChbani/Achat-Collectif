@@ -89,7 +89,7 @@ public class Categorie_daoImp extends MyCollection implements Categorie_dao {
 			List<Categorie> myCategoriesList = new ArrayList<Categorie>();
 			try {
 				for (int i = 0; i < myDocumentsList.size(); i++) {
-					myCategoriesList.add(new Categorie(myDocumentsList.get(i).get("id").toString(),
+					myCategoriesList.add(new Categorie(myDocumentsList.get(i).get("_id").toString(),
 							myDocumentsList.get(i).get("libelle").toString()
 						)
 					);

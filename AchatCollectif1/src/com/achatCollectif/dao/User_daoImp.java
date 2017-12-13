@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.achatCollectif.model.Administrateur;
 import com.achatCollectif.model.User;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 public class User_daoImp extends MyCollection implements User_dao {
@@ -21,14 +22,7 @@ public class User_daoImp extends MyCollection implements User_dao {
 		List<User> lesUsers = new ArrayList<User>();
 		for (int i = 0; i < myDocumentsList.size(); i++) {
 			lesUsers.add(
-					new Administrateur(
-					myDocumentsList.get(i).get("id").toString(), 
-					myDocumentsList.get(i).get("nom").toString(),
-					myDocumentsList.get(i).get("prenom").toString(),
-					myDocumentsList.get(i).get("cin").toString(),
-					myDocumentsList.get(i).get("email").toString(),
-					myDocumentsList.get(i).get("password").toString()
-					)
+					createUserFromDBObject((BasicDBObject)myDocumentsList.get(i))
 				);
 		}
 		return lesUsers;
@@ -56,4 +50,17 @@ public class User_daoImp extends MyCollection implements User_dao {
 		return null;
 	}
 
+	
+	public User createUserFromDBObject(BasicDBObject dbObject){
+		String id = dbObject.getString("_id");
+		String nom = dbObject.getString("nom");
+		String prenom = dbObject.getString("prenom");
+		String email = dbObject.getString("email");
+		String cin = dbObject.getString("cin");
+		String password = dbObject.getString("password");
+		boolean estAdmin = dbObject.getBoolean("estAdmin");
+		
+		return new User(id, nom, prenom, cin, email, password, estAdmin);
+		
+	}
 }

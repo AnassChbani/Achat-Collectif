@@ -9,9 +9,14 @@ public class Client extends User{
 		// TODO Auto-generated constructor stub
 	}
 
+	public Client( String nom, String prenom, String cin, String email, String password) {
+		super(nom, prenom, cin, email, password);
+		this.estAdmin = false;
+	}
+	
 	public Client(String id, String nom, String prenom, String cin, String email, String password) {
 		super(id, nom, prenom, cin, email, password);
-		this.estAdmin = true;
+		this.estAdmin = false;
 	}
 	
 }

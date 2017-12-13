@@ -14,8 +14,8 @@ public class Sujet {
 	private String note;
 	private String idUser;
 	private String idCategorie;
-	private List<String> listAdherent;
-	private List<String> listCommentaire;
+	private List<User> listAdherent;
+	private List<Commentaire> listCommentaire;
 	
 	
 	
@@ -43,10 +43,26 @@ public class Sujet {
 		this.idUser = idUser;
 		this.idCategorie = idCategorie;
 	}
+	
+	public Sujet(String libelle, String description, double prix,
+			Date dateDepo, Date dateExtra, String image, String note,
+			String idUser, String idCategorie) {
+		super();
+		this.libelle = libelle;
+		this.description = description;
+		this.prix = prix;
+		this.dateDepo = dateDepo;
+		this.dateExtra = dateExtra;
+		this.image = image;
+		this.note = note;
+		this.idUser = idUser;
+		this.idCategorie = idCategorie;
+	}
+	
 	public Sujet(String id, String libelle, String description, double prix,
 			Date dateDepo, Date dateExtra, String image, String note,
-			String idUser, String idCategorie, List<String> listAdherent,
-			List<String> listCommentaire) {
+			String idUser, String idCategorie, List<User> listAdherent,
+			List<Commentaire> listCommentaire) {
 		super();
 		this.id = id;
 		this.libelle = libelle;
@@ -61,6 +77,25 @@ public class Sujet {
 		this.listAdherent = listAdherent;
 		this.listCommentaire = listCommentaire;
 	}
+	
+	public Sujet( String libelle, String description, double prix,
+			Date dateDepo, Date dateExtra, String image, String note,
+			String idUser, String idCategorie, List<User> listAdherent,
+			List<Commentaire> listCommentaire) {
+		super();
+		this.libelle = libelle;
+		this.description = description;
+		this.prix = prix;
+		this.dateDepo = dateDepo;
+		this.dateExtra = dateExtra;
+		this.image = image;
+		this.note = note;
+		this.idUser = idUser;
+		this.idCategorie = idCategorie;
+		this.listAdherent = listAdherent;
+		this.listCommentaire = listCommentaire;
+	}
+	
 	public Sujet() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -125,16 +160,16 @@ public class Sujet {
 	public void setCategorie(String idCategorie) {
 		this.idCategorie = idCategorie;
 	}
-	public List<String> getListAdherent() {
+	public List<User> getListAdherent() {
 		return listAdherent;
 	}
-	public void setListAdherent(List<String> listAdherent) {
+	public void setListAdherent(List<User> listAdherent) {
 		this.listAdherent = listAdherent;
 	}
-	public List<String> getListCommentaire() {
+	public List<Commentaire> getListCommentaire() {
 		return listCommentaire;
 	}
-	public void setListCommentaire(List<String> listCommentaire) {
+	public void setListCommentaire(List<Commentaire> listCommentaire) {
 		this.listCommentaire = listCommentaire;
 	}
 	

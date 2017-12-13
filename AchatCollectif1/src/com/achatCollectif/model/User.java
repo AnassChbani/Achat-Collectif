@@ -26,6 +26,25 @@ public class User {
 		this.email = email;
 		this.password = password;
 	}
+	
+	public User(String nom, String prenom, String cin, String email, String password) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.cin = cin;
+		this.email = email;
+		this.password = password;
+	}
+	public User(String id, String nom, String prenom, String cin, String email, String password, boolean estAdmin) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.cin = cin;
+		this.email = email;
+		this.password = password;
+		this.estAdmin = estAdmin;
+	}
 	@Override
 	public String toString() {
 		return "Client [id=" + id + ", nom=" + nom + ", prenom=" + prenom
