@@ -60,7 +60,6 @@ public class User_daoImp extends MyCollection implements User_dao {
 		String password = dbObject.getString("password");
 		boolean estAdmin = dbObject.getBoolean("estAdmin");
 		
-		return new User(id, nom, prenom, cin, email, password, estAdmin);
-		
+		return new User(id, nom, prenom, cin, email, password, estAdmin);		
 	}
 }

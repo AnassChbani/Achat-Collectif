@@ -47,7 +47,7 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "Client [id=" + id + ", nom=" + nom + ", prenom=" + prenom
+		return "User [id=" + id + ", nom=" + nom + ", prenom=" + prenom
 				+ ", cin=" + cin + ", email=" + email + "]";
 	}
 	

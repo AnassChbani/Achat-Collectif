@@ -11,5 +11,10 @@ public class Administrateur extends User{
 		this.estAdmin = true;
 	}	
 	
+	public Administrateur( String nom, String prenom, String cin, String email, String password) {
+		super(nom, prenom, cin, email, password);
+		this.estAdmin = true;
+	}	
+	
 	
 }
