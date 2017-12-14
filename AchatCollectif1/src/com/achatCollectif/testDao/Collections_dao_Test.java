@@ -1,4 +1,4 @@
-package com.achatCollectif.test;
+package com.achatCollectif.testDao;
 
 public class Collections_dao_Test {
 

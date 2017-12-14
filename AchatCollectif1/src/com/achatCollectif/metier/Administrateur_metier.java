@@ -1,6 +1,8 @@
 package com.achatCollectif.metier;
 
-public interface Administrateur_metier {
-	public void supprimerUnSujet();
-	public void modifierUnSujet();
+import com.achatCollectif.model.Sujet;
+
+public interface Administrateur_metier extends Client_metier {
+	public Sujet supprimerUnSujet(Sujet sujet);
+	public Sujet modifierUnSujet(Sujet oldSujet, Sujet newSujet);
 }

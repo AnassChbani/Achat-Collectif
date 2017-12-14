@@ -1,47 +1,50 @@
 package com.achatCollectif.metier;
 
+import com.achatCollectif.model.Commentaire;
+import com.achatCollectif.model.Sujet;
+
 public class Client_metierImp implements Client_metier {
 
 	@Override
-	public void creerSujet() {
+	public Sujet creerSujet(Sujet sujet) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void commenterSujet() {
+	public Commentaire commenterSujet(Sujet sujet, Commentaire commentaire) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void adhererAUnSujet() {
+	public Sujet adhererAUnSujet(Sujet sujet) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void supprimerSonSujet() {
+	public Sujet supprimerSonSujet(Sujet sujet) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void modifierSonSujet() {
+	public Sujet modifierSonSujet(Sujet oldSujet, Sujet newSujet) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void supprimerSonCommentaire() {
+	public Commentaire supprimerSonCommentaire(Sujet sujet, Commentaire commentaire) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void setNouvelleNotification() {
+	public boolean setNouvelleNotification() {
 		// TODO Auto-generated method stub
-
+		return false;
 	}
-
+	
 }

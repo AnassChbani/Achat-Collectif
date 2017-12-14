@@ -1,4 +1,4 @@
-package com.achatCollectif.test;
+package com.achatCollectif.testDao;
 
 import java.util.Date;
 import java.util.List;

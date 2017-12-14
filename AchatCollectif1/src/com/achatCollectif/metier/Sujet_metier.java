@@ -1,11 +1,14 @@
 package com.achatCollectif.metier;
 
+import com.achatCollectif.model.Client;
+import com.achatCollectif.model.Commentaire;
+import com.achatCollectif.model.User;
+
 public interface Sujet_metier {
-	public void diminuerPrix();
-	public void ajouterAdherent();
-	public void ajouterCommentaire();
+	public double diminuerPrix();
+	public User ajouterAdherent(User user);
+	public Commentaire ajouterCommentaire();
 	public String getDuree();
-	public void diminuerDuree();
 	public boolean estExpire();
-	public void notifier();
+	public boolean notifier();
 }

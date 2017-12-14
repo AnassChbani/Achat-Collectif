@@ -1,4 +1,4 @@
-package com.achatCollectif.test;
+package com.achatCollectif.testDao;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

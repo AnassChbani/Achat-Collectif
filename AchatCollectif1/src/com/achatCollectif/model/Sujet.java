@@ -12,6 +12,7 @@ public class Sujet {
 	private Date dateExtra;
 	private String image;
 	private String note;
+	private double tauxDiminutionParJour;
 	private String idUser;
 	private String idCategorie;
 	private List<User> listAdherent;
@@ -19,17 +20,9 @@ public class Sujet {
 	
 	
 	
-	@Override
-	public String toString() {
-		return "Sujet [id=" + id + ", libelle=" + libelle + ", description="
-				+ description + ", prix=" + prix + ", dateDepo=" + dateDepo
-				+ ", dateExtra=" + dateExtra + ", image=" + image + ", note="
-				+ note + ", propietaire=" + idUser + ", categorie="
-				+ idCategorie + ", listAdherent=" + listAdherent
-				+ ", listCommentaire=" + listCommentaire + "]";
-	}
+	
 	public Sujet(String id, String libelle, String description, double prix,
-			Date dateDepo, Date dateExtra, String image, String note,
+			Date dateDepo, Date dateExtra, String image, String note, double tauxDiminutionParJour,
 			String idUser, String idCategorie) {
 		super();
 		this.id = id;
@@ -40,12 +33,13 @@ public class Sujet {
 		this.dateExtra = dateExtra;
 		this.image = image;
 		this.note = note;
+		this.tauxDiminutionParJour = tauxDiminutionParJour;
 		this.idUser = idUser;
 		this.idCategorie = idCategorie;
 	}
 	
 	public Sujet(String libelle, String description, double prix,
-			Date dateDepo, Date dateExtra, String image, String note,
+			Date dateDepo, Date dateExtra, String image, String note, double tauxDiminutionParJour,
 			String idUser, String idCategorie) {
 		super();
 		this.libelle = libelle;
@@ -55,12 +49,13 @@ public class Sujet {
 		this.dateExtra = dateExtra;
 		this.image = image;
 		this.note = note;
+		this.tauxDiminutionParJour = tauxDiminutionParJour;
 		this.idUser = idUser;
 		this.idCategorie = idCategorie;
 	}
 	
 	public Sujet(String id, String libelle, String description, double prix,
-			Date dateDepo, Date dateExtra, String image, String note,
+			Date dateDepo, Date dateExtra, String image, String note, double tauxDiminutionParJour,
 			String idUser, String idCategorie, List<User> listAdherent,
 			List<Commentaire> listCommentaire) {
 		super();
@@ -72,6 +67,7 @@ public class Sujet {
 		this.dateExtra = dateExtra;
 		this.image = image;
 		this.note = note;
+		this.tauxDiminutionParJour = tauxDiminutionParJour;
 		this.idUser = idUser;
 		this.idCategorie = idCategorie;
 		this.listAdherent = listAdherent;
@@ -79,7 +75,7 @@ public class Sujet {
 	}
 	
 	public Sujet( String libelle, String description, double prix,
-			Date dateDepo, Date dateExtra, String image, String note,
+			Date dateDepo, Date dateExtra, String image, String note, double tauxDiminutionParJour,
 			String idUser, String idCategorie, List<User> listAdherent,
 			List<Commentaire> listCommentaire) {
 		super();
@@ -90,12 +86,31 @@ public class Sujet {
 		this.dateExtra = dateExtra;
 		this.image = image;
 		this.note = note;
+		this.tauxDiminutionParJour = tauxDiminutionParJour;
 		this.idUser = idUser;
 		this.idCategorie = idCategorie;
 		this.listAdherent = listAdherent;
 		this.listCommentaire = listCommentaire;
 	}
 	
+	
+	
+	public Sujet(String libelle, String description, double prix,
+			Date dateDepo, Date dateExtra, String image, String note,
+			double tauxDiminutionParJour, User user, Categorie categorie) {
+		super();
+		this.libelle = libelle;
+		this.description = description;
+		this.prix = prix;
+		this.dateDepo = dateDepo;
+		this.dateExtra = dateExtra;
+		this.image = image;
+		this.note = note;
+		this.tauxDiminutionParJour = tauxDiminutionParJour;
+		this.idUser = user.getId();
+		this.idCategorie = categorie.getId();
+	}
+
 	public Sujet() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -172,6 +187,18 @@ public class Sujet {
 	public void setListCommentaire(List<Commentaire> listCommentaire) {
 		this.listCommentaire = listCommentaire;
 	}
+
+	@Override
+	public String toString() {
+		return "Sujet [id=" + id + ", libelle=" + libelle + ", description="
+				+ description + ", prix=" + prix + ", dateDepo=" + dateDepo
+				+ ", dateExtra=" + dateExtra + ", image=" + image + ", note="
+				+ note + ", tauxDiminutionParJour=" + tauxDiminutionParJour
+				+ ", idUser=" + idUser + ", idCategorie=" + idCategorie
+				+ ", listAdherent=" + listAdherent + ", listCommentaire="
+				+ listCommentaire + "]";
+	}
+	
 	
 	
 }

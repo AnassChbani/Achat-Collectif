@@ -1,4 +1,4 @@
-package com.achatCollectif.test;
+package com.achatCollectif.testDao;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,6 +58,7 @@ public class Sujet_dao_test extends Collections_dao_Test {
 				new Date(23,03,2017),
 				"imageProduitTest", 
 				"NotePourTester", 
+				20,
 				"idProprietaire",
 				"idCategorie",
 				listAdherents,
@@ -72,7 +73,7 @@ public class Sujet_dao_test extends Collections_dao_Test {
 	
 	public void supprimerSujet(){
 		Sujet_dao db_sujet = new Sujet_daoImp(host, port, dataBaseName);
-		Sujet SujetToDelete = new Sujet("SujetToDelete", "DescriptionSujetTest", 90, new Date(23,03,1995), new Date(23,03,2017), "imageProduitTest", "NotePourTester", "id1", "id1");
+		Sujet SujetToDelete = new Sujet("SujetToDelete", "DescriptionSujetTest", 90, new Date(23,03,1995), new Date(23,03,2017), "imageProduitTest", "NotePourTester", 20, "id1", "id1");
 		Sujet SujetToDeletedb=db_sujet.ajouterSujet(SujetToDelete);
 		
 		System.out.println("Testing : "+SujetToDeletedb.toString());
@@ -85,9 +86,9 @@ public class Sujet_dao_test extends Collections_dao_Test {
 	
 	public void modifierSujet(){
 		Sujet_dao db_sujet = new Sujet_daoImp(host, port, dataBaseName);
-		Sujet oldSujet = new Sujet("libelleSujetTest", "DescriptionSujetTest", 90, new Date(23,03,1995), new Date(23,03,2017), "imageProduitTest", "NotePourTester", "id1", "id1");
+		Sujet oldSujet = new Sujet("libelleSujetTest", "DescriptionSujetTest", 90, new Date(23,03,1995), new Date(23,03,2017), "imageProduitTest", "NotePourTester",20, "id1", "id1");
 		oldSujet=db_sujet.ajouterSujet(oldSujet);
-		Sujet newSujet = new Sujet("libelleSujetTest_modifiéé", "DescriptionSujetTest", 90, new Date(23,03,1995), new Date(23,03,2017), "imageProduitTest", "NotePourTester", "id1", "id1");
+		Sujet newSujet = new Sujet("libelleSujetTest_modifiéé", "DescriptionSujetTest", 90, new Date(23,03,1995), new Date(23,03,2017), "imageProduitTest", "NotePourTester", 20, "id1", "id1");
 		
 		if(db_sujet.modifierSujet(oldSujet, newSujet) != null){
 			System.out.println("TEST:modifierSujet : done");

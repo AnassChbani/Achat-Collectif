@@ -128,6 +128,7 @@ public class Sujet_daoImp extends MyCollection implements Sujet_dao {
 		Date dateExtra = (Date)(dbObject.get("dateExtra"));
 		String image = dbObject.get("image").toString();
 		String note = dbObject.get("note").toString();
+		double tauxDiminutionParJour = dbObject.getDouble("tauxDiminutionParJour");
 		String idUser = dbObject.get("idUser").toString();
 		String idCategorie = dbObject.get("idCategorie").toString();
 		List<BasicDBObject> listAdherentsObject = (ArrayList<BasicDBObject>)dbObject.get("listAdherent");
@@ -156,8 +157,8 @@ public class Sujet_daoImp extends MyCollection implements Sujet_dao {
 			}
 		}
 		
-		Sujet monSujet = new Sujet(id, libelle, description, prix, dateDepo, dateExtra, image, note, idUser, idCategorie);		
-		if(listAdherents != null){
+		Sujet monSujet = new Sujet(id, libelle, description, prix, dateDepo, dateExtra, image, note, tauxDiminutionParJour, idUser, idCategorie);		
+		if(listAdherents != null){ ;
 			monSujet.setListAdherent(listAdherents);
 		}
 		
