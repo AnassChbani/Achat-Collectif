@@ -188,6 +188,31 @@ public class Sujet {
 		this.listCommentaire = listCommentaire;
 	}
 
+	
+	public double getTauxDiminutionParJour() {
+		return tauxDiminutionParJour;
+	}
+
+	public void setTauxDiminutionParJour(double tauxDiminutionParJour) {
+		this.tauxDiminutionParJour = tauxDiminutionParJour;
+	}
+
+	public String getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(String idUser) {
+		this.idUser = idUser;
+	}
+
+	public String getIdCategorie() {
+		return idCategorie;
+	}
+
+	public void setIdCategorie(String idCategorie) {
+		this.idCategorie = idCategorie;
+	}
+
 	@Override
 	public String toString() {
 		return "Sujet [id=" + id + ", libelle=" + libelle + ", description="

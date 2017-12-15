@@ -28,16 +28,15 @@ public class Sujet_daoImp extends MyCollection implements Sujet_dao {
 	public Sujet ajouterSujet(Sujet sujet) {
 		BasicDBObject db_sujet = createDBObjectFromSujet(sujet); 
 		User_dao userdao = new User_daoImp(host, port, dataBaseName);
-		if(this.getSujetObject(sujet) == null){
-			BasicDBObject objectInserted = this.myDB.insertToCollection(COLLECTION_NAME, db_sujet);
-			if( objectInserted != null){
-				return createSujetFromDbObject(objectInserted, userdao);
-			}else{ 
-				return null;
-			}	
-		}else{
+		System.out.println("Mon sujet === "+sujet.toString());
+		BasicDBObject objectInserted = this.myDB.insertToCollection(COLLECTION_NAME, db_sujet);
+		
+		if( objectInserted != null){
+			return createSujetFromDbObject(objectInserted, userdao);
+		}else{ 
 			return null;
-		}
+		}	
+		
 	}
 
 	@Override
@@ -89,8 +88,10 @@ public class Sujet_daoImp extends MyCollection implements Sujet_dao {
 	@Override
 	public BasicDBObject getSujetObject(Sujet sujet) {
 		List<DBObject> myDocumentsList = this.myDB.getdocumentsFromCollection(COLLECTION_NAME);
-		System.out.println("myDocumentsList : "+myDocumentsList);
-		System.out.println("Sujet : "+sujet.getId());
+		
+		//System.out.println("myDocumentsList : "+myDocumentsList);
+		//System.out.println("Sujet : "+sujet.getId());
+		
 		BasicDBObject sujetObject = null;
 		for (int i = 0; i < myDocumentsList.size(); i++) {
 			sujetObject = (BasicDBObject) myDocumentsList.get(i);
@@ -177,25 +178,37 @@ public class Sujet_daoImp extends MyCollection implements Sujet_dao {
 		dbObject.append("dateExtra",sujet.getDateExtra());
 		dbObject.append("image",sujet.getImage());
 		dbObject.append("note",sujet.getNote());
+		dbObject.append("tauxDiminutionParJour",sujet.getTauxDiminutionParJour());
 		dbObject.append("idUser",sujet.getPropietaire());
 		dbObject.append("idCategorie",sujet.getCategorie());
 		
 		ArrayList<DBObject> listAdhents = new ArrayList<DBObject>();
-		BasicDBObject adherentDBObject = new BasicDBObject();
+		BasicDBObject adherentDBObject = null;
 		if( sujet.getListAdherent() != null){
+
 			for (int i = 0; i < sujet.getListAdherent().size(); i++) {
-				adherentDBObject.append("idAdherent", sujet.getListAdherent().get(i).getId());
-				listAdhents.add(adherentDBObject);
+				if(sujet.getListAdherent().get(i) != null){
+					adherentDBObject = new BasicDBObject();
+					adherentDBObject.append("idAdherent", sujet.getListAdherent().get(i).getId());
+					listAdhents.add(adherentDBObject);
+				}
 			}
 			dbObject.put("listAdherent", listAdhents);
 		}
 		
 		List<DBObject> listCommentaires = new ArrayList<DBObject>();
-		BasicDBObject unCommentaire = new BasicDBObject();
-		if(sujet.getListAdherent() != null){
-			for (int i = 0; i < sujet.getListAdherent().size(); i++) {
-				unCommentaire.append("textCommentaire", sujet.getListCommentaire().get(i).getTextCommentaire());
-				unCommentaire.append("idproprietaire", sujet.getListCommentaire().get(i).getProprietaire().getId());
+		BasicDBObject unCommentaire = null;
+		if(sujet.getListCommentaire() != null){
+
+			
+			for (int i = 0; i < sujet.getListCommentaire().size(); i++) {
+				unCommentaire = new BasicDBObject();
+				if(sujet.getListCommentaire().get(i).getTextCommentaire() != null){
+					unCommentaire.append("textCommentaire", sujet.getListCommentaire().get(i).getTextCommentaire());
+				}
+				if(sujet.getListCommentaire().get(i).getProprietaire() != null){
+					unCommentaire.append("idproprietaire", sujet.getListCommentaire().get(i).getProprietaire().getId());	
+				}
 				listCommentaires.add(unCommentaire);
 			}
 			dbObject.put("listCommentaire",listCommentaires);

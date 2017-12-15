@@ -71,6 +71,49 @@ public class Sujet_dao_test extends Collections_dao_Test {
 		}
 	}
 	
+	public void ajouterSujetRemplissage_test(){
+		Sujet_dao db_sujet = new Sujet_daoImp(host, port, dataBaseName);
+		List<User> listAdherents = new ArrayList<User>();
+		
+		Client_dao db_client = new Client_daoImp(host, port, dataBaseName);
+		
+		Client db_c0 = db_client.getClientByCin("BH009");
+		Client db_c1 = db_client.getClientByCin("BH008");
+		Client db_c2 = db_client.getClientByCin("BH006");
+		Client db_c3 = db_client.getClientByCin("BH004");
+		
+		listAdherents.add(db_c0);
+		listAdherents.add(db_c1);
+		listAdherents.add(db_c2);
+		listAdherents.add(db_c3);
+		
+		List<Commentaire> listCommentaires = new ArrayList<Commentaire>();
+		listCommentaires.add(new Commentaire("Commentaire 89", db_c0));
+		listCommentaires.add(new Commentaire("Commentaire 18", db_c1));
+		listCommentaires.add(new Commentaire("Commentaire 67", db_c2));
+		listCommentaires.add(new Commentaire("Commentaire 008", db_c3));
+		
+		Categorie categorie = new Categorie("Convoiturage");
+		Sujet monSujet = new Sujet("libelleSujetTest",
+				"DescriptionSujetTest",
+				900,
+				new Date(23,03,1995), 
+				new Date(23,03,2017),
+				"imageProduitTest", 
+				"NotePourTester", 
+				20,
+				db_c0.getId(),
+				categorie.getLibelle(),
+				listAdherents,
+				listCommentaires
+				);
+		if(db_sujet.ajouterSujet(monSujet) != null){
+			System.out.println("TEST:ajouterSujet_test : done");
+		}else{
+			System.out.println("TEST:ajouterSujet_test : null");
+		}
+	}
+	
 	public void supprimerSujet(){
 		Sujet_dao db_sujet = new Sujet_daoImp(host, port, dataBaseName);
 		Sujet SujetToDelete = new Sujet("SujetToDelete", "DescriptionSujetTest", 90, new Date(23,03,1995), new Date(23,03,2017), "imageProduitTest", "NotePourTester", 20, "id1", "id1");
@@ -83,6 +126,8 @@ public class Sujet_dao_test extends Collections_dao_Test {
 			System.out.println("TEST:supprimerSujet : null");
 		}		
 	}
+	
+	
 	
 	public void modifierSujet(){
 		Sujet_dao db_sujet = new Sujet_daoImp(host, port, dataBaseName);
@@ -133,13 +178,13 @@ public class Sujet_dao_test extends Collections_dao_Test {
 	public static void main(String[] args) {
 		System.out.println("=====================================");
 		Sujet_dao_test sujet_dao_test = new Sujet_dao_test();
-		sujet_dao_test.supprimerToutLesSujets();
-		sujet_dao_test.ajouterSujet_test();
+		//sujet_dao_test.supprimerToutLesSujets();
+		sujet_dao_test.ajouterSujetRemplissage_test();
 		//sujet_dao_test.getSujetById_test();
-		sujet_dao_test.getAllSujets_test();
-		sujet_dao_test.modifierSujet();
 		//sujet_dao_test.getAllSujets_test();
-		sujet_dao_test.supprimerSujet();
+		//sujet_dao_test.modifierSujet();
+		//sujet_dao_test.getAllSujets_test();
+		//sujet_dao_test.supprimerSujet();
 		//sujet_dao_test.getAllSujets_test();
 		System.out.println("=====================================");
 	}

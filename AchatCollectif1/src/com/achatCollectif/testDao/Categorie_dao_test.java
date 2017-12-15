@@ -16,12 +16,12 @@ public class Categorie_dao_test extends Collections_dao_Test{
 		Categorie_dao_test categorie_dao_test = new Categorie_dao_test();
 		categorie_dao_test.supprimerAllCaterories();
 		categorie_dao_test.ajouterCategorie();
-		categorie_dao_test.getCategorieById();
-		categorie_dao_test.getAllCategories();
-		categorie_dao_test.modifierCategorie();
-		categorie_dao_test.getAllCategories();
-		categorie_dao_test.supprimerCategorie();
-		categorie_dao_test.getAllCategories();
+		//categorie_dao_test.getCategorieById();
+		//categorie_dao_test.getAllCategories();
+		//categorie_dao_test.modifierCategorie();
+		//categorie_dao_test.getAllCategories();
+		//categorie_dao_test.supprimerCategorie();
+		//categorie_dao_test.getAllCategories();
 		System.out.println("=====================================");
 	}
 
@@ -71,8 +71,41 @@ public class Categorie_dao_test extends Collections_dao_Test{
 	
 	private void ajouterCategorie() {
 		Categorie_dao db_categorie = new Categorie_daoImp(host, port, dataBaseName);
-		Categorie maCategorie = new Categorie("id1", "LibelleCategorieTest");
+		Categorie maCategorie = new Categorie( "ElectroMénager");
+		Categorie maCategorie1 = new Categorie( "Convoiturage");
+		Categorie maCategorie2 = new Categorie( "Hôtelerie");
+		Categorie maCategorie3 = new Categorie( "Formation");
+		Categorie maCategorie4 = new Categorie("Immobilier");
+		Categorie maCategorie5 = new Categorie( "Tourisme");
+		
+		
+		
 		if(db_categorie.ajouterCategorie(maCategorie) != null){
+			System.out.println("TEST:ajouterCategorie : done");
+		}else{
+			System.out.println("TEST:ajouterCategorie : null");
+		}
+		if(db_categorie.ajouterCategorie(maCategorie1) != null){
+			System.out.println("TEST:ajouterCategorie : done");
+		}else{
+			System.out.println("TEST:ajouterCategorie : null");
+		}
+		if(db_categorie.ajouterCategorie(maCategorie2) != null){
+			System.out.println("TEST:ajouterCategorie : done");
+		}else{
+			System.out.println("TEST:ajouterCategorie : null");
+		}
+		if(db_categorie.ajouterCategorie(maCategorie3) != null){
+			System.out.println("TEST:ajouterCategorie : done");
+		}else{
+			System.out.println("TEST:ajouterCategorie : null");
+		}
+		if(db_categorie.ajouterCategorie(maCategorie4) != null){
+			System.out.println("TEST:ajouterCategorie : done");
+		}else{
+			System.out.println("TEST:ajouterCategorie : null");
+		}
+		if(db_categorie.ajouterCategorie(maCategorie5) != null){
 			System.out.println("TEST:ajouterCategorie : done");
 		}else{
 			System.out.println("TEST:ajouterCategorie : null");

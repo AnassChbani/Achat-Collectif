@@ -17,8 +17,14 @@ public class Administrateur_dao_test extends Collections_dao_Test {
 	
 	public  void ajouterAdministrateur_test(){
 		Administrateur_dao db_administrateur = new Administrateur_daoImp(host, port, dataBaseName);
-		Administrateur myAdministrateur = new Administrateur( "Chbani", "Anass", "BH473528", "chbanianass@hotmail.com", "passwordAdministrateur");
+		Administrateur myAdministrateur = new Administrateur( "Admin1", "Anass", "BH473528", "chbanianass@hotmail.com", "passwordAdministrateur");
+		Administrateur myAdministrateur2 = new Administrateur( "Admin2", "Anass", "BH473528", "chbanianass@hotmail.com", "passwordAdministrateur");
 		if(db_administrateur.ajouterAdministrateur(myAdministrateur) != null){
+			System.out.println("ajouterAdministrateur_test : done");
+		}else{
+			System.out.println("ajouterAdministrateur_test : null");
+		}
+		if(db_administrateur.ajouterAdministrateur(myAdministrateur2) != null){
 			System.out.println("ajouterAdministrateur_test : done");
 		}else{
 			System.out.println("ajouterAdministrateur_test : null");
@@ -85,8 +91,8 @@ public class Administrateur_dao_test extends Collections_dao_Test {
 		Administrateur_dao_test administrateur_dao_test = new Administrateur_dao_test();
 		administrateur_dao_test.supprimerTousLesAdministrateurs();
 		administrateur_dao_test.ajouterAdministrateur_test();
-		administrateur_dao_test.getAllAdministrateur_test();
-		administrateur_dao_test.modifierAdministrateur_test();
-		administrateur_dao_test.supprimerAdministrateur_test();
+		//administrateur_dao_test.getAllAdministrateur_test();
+		//administrateur_dao_test.modifierAdministrateur_test();
+		//administrateur_dao_test.supprimerAdministrateur_test();
 	}
 }

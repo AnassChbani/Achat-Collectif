@@ -1,10 +1,19 @@
 package com.achatCollectif.metier;
 
+import java.util.List;
+
+import com.achatCollectif.model.Categorie;
 import com.achatCollectif.model.Commentaire;
 import com.achatCollectif.model.Sujet;
 
 public class Administrateur_metierImp implements Administrateur_metier {
 
+	@Override
+	public Categorie ajouterCategorie(Categorie categorie) {
+		
+		return null;
+	}
+	
 	@Override
 	public Sujet supprimerUnSujet(Sujet sujet) {
 		// TODO Auto-generated method stub
@@ -58,6 +67,12 @@ public class Administrateur_metierImp implements Administrateur_metier {
 	public boolean setNouvelleNotification() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<Categorie> getAllCategories() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

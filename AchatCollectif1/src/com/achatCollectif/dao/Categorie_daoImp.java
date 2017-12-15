@@ -20,8 +20,7 @@ public class Categorie_daoImp extends MyCollection implements Categorie_dao {
 
 	@Override
 	public Categorie ajouterCategorie(Categorie categorie) {
-		BasicDBObject db_categorie = new BasicDBObject(); 
-		db_categorie.append("id",categorie.getId());
+		BasicDBObject db_categorie = new BasicDBObject();
 		db_categorie.append("libelle",categorie.getLibelle());
 		if(this.getCategorieObjectById(categorie.getId()) == null){
 			if(this.myDB.insertToCollection(COLLECTION_NAME, db_categorie) != null){
@@ -109,7 +108,7 @@ public class Categorie_daoImp extends MyCollection implements Categorie_dao {
 		BasicDBObject categoieObject = null;
 		for (int i = 0; i < myCategoriesList.size(); i++) {
 			categoieObject = (BasicDBObject) myCategoriesList.get(i);
-			if (categoieObject.get("id").toString().equalsIgnoreCase(id)) {
+			if (categoieObject.get("_id").toString().equalsIgnoreCase(id)) {
 				return categoieObject;
 			}
 		}
