@@ -1,80 +1,123 @@
 package com.achatCollectif.metier;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.achatCollectif.dao.DBAccess;
+import com.achatCollectif.dao.DBAccessImp;
+import com.achatCollectif.model.Administrateur;
 import com.achatCollectif.model.Categorie;
 import com.achatCollectif.model.Commentaire;
 import com.achatCollectif.model.Sujet;
+import com.achatCollectif.model.User;
 
 public class Administrateur_metierImp implements Administrateur_metier {
 
+	String HOST = "localhost";
+	int PORT = 27017;
+	String DATABASENAME = "AchatCollectif";
+	
+	Administrateur administrateurMetier ;
+	DBAccess dbAccess;
+	
+	public Administrateur_metierImp(Administrateur administrateur) {
+		this.administrateurMetier = administrateur;
+		dbAccess = new DBAccessImp(HOST, PORT, DATABASENAME);
+	}
+	
 	@Override
 	public Categorie ajouterCategorie(Categorie categorie) {
-		
-		return null;
+		return dbAccess.ajouterCategorie(categorie);
 	}
 	
 	@Override
 	public Sujet supprimerUnSujet(Sujet sujet) {
-		// TODO Auto-generated method stub
-		return null;
+		return dbAccess.supprimerSujet(sujet);
 	}
 
 	@Override
 	public Sujet modifierUnSujet(Sujet oldSujet, Sujet newSujet) {
-		// TODO Auto-generated method stub
-		return null;
+		return dbAccess.modifierSujet(oldSujet, newSujet);
 	}
 
 	@Override
 	public Sujet creerSujet(Sujet sujet) {
-		// TODO Auto-generated method stub
-		return null;
+		return dbAccess.ajouterSujet(sujet);
 	}
 
 	@Override
-	public Commentaire commenterSujet(Sujet sujet, Commentaire commentaire) {
-		// TODO Auto-generated method stub
-		return null;
+	public Sujet commenterSujet(Sujet sujet, Commentaire commentaire) {
+		Sujet oldSujet = dbAccess.getSujetByIdFromDB(sujet.getId());
+		Sujet newSujet = oldSujet;
+		List<Commentaire> listComments = newSujet.getListCommentaire();
+		if(listComments == null){
+			listComments = new ArrayList<Commentaire>();
+		}
+		listComments.add(commentaire);
+		newSujet.setListCommentaire(listComments);
+		return dbAccess.modifierSujet(oldSujet, newSujet);
 	}
 
 	@Override
 	public Sujet adhererAUnSujet(Sujet sujet) {
-		// TODO Auto-generated method stub
-		return null;
+		Sujet oldSujet = dbAccess.getSujetByIdFromDB(sujet.getId());
+		Sujet newSujet = oldSujet;
+		List<User> listAdherents = oldSujet.getListAdherent();
+		if(listAdherents == null){
+			listAdherents = new ArrayList<User>();
+		}
+		listAdherents.add(this.administrateurMetier);
+		newSujet.setListAdherent(listAdherents);
+		return dbAccess.modifierSujet(oldSujet, newSujet);
 	}
 
 	@Override
 	public Sujet supprimerSonSujet(Sujet sujet) {
-		// TODO Auto-generated method stub
-		return null;
+		return supprimerUnSujet(sujet);
 	}
 
 	@Override
 	public Sujet modifierSonSujet(Sujet oldSujet, Sujet newSujet) {
-		// TODO Auto-generated method stub
+		if(oldSujet.getPropietaire().equals(this.administrateurMetier.getId())){
+			return dbAccess.modifierSujet(oldSujet, newSujet);
+		}
 		return null;
 	}
 
 	@Override
-	public Commentaire supprimerSonCommentaire(Sujet sujet,
-			Commentaire commentaire) {
-		// TODO Auto-generated method stub
+	public Sujet supprimerSonCommentaire(Sujet sujet, Commentaire commentaire) {
+		List<Commentaire> listCommentaires = sujet.getListCommentaire();
+		for (int i = 0; i < listCommentaires.size(); i++) {
+			if(listCommentaires.get(i).equals(commentaire.getProprietaire())){
+				if(listCommentaires.get(i).getProprietaire().equals(this.administrateurMetier.getId())){
+					Sujet newSujet = sujet;
+					newSujet.getListCommentaire().remove(i);
+					return dbAccess.modifierSujet(sujet, newSujet);
+				}
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public boolean setNouvelleNotification() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public List<Categorie> getAllCategories() {
-		// TODO Auto-generated method stub
-		return null;
+		return dbAccess.getAllCategories();
 	}
 
+	public Administrateur getAdministrateurMetier() {
+		return administrateurMetier;
+	}
+
+	public void setAdministrateurMetier(Administrateur administrateurMetier) {
+		this.administrateurMetier = administrateurMetier;
+	}
+
+	
 	
 
 }

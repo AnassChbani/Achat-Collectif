@@ -3,10 +3,6 @@ package com.achatCollectif.testDao;
 import java.util.Date;
 import java.util.List;
 
-import com.achatCollectif.dao.Administrateur_dao;
-import com.achatCollectif.dao.Administrateur_daoImp;
-import com.achatCollectif.dao.Sujet_dao;
-import com.achatCollectif.dao.Sujet_daoImp;
 import com.achatCollectif.model.Administrateur;
 
 public class Administrateur_dao_test extends Collections_dao_Test {
@@ -14,7 +10,7 @@ public class Administrateur_dao_test extends Collections_dao_Test {
 	public Administrateur_dao_test(){
 		super();
 	}
-	
+	/*
 	public  void ajouterAdministrateur_test(){
 		Administrateur_dao db_administrateur = new Administrateur_daoImp(host, port, dataBaseName);
 		Administrateur myAdministrateur = new Administrateur( "Admin1", "Anass", "BH473528", "chbanianass@hotmail.com", "passwordAdministrateur");
@@ -95,4 +91,5 @@ public class Administrateur_dao_test extends Collections_dao_Test {
 		//administrateur_dao_test.modifierAdministrateur_test();
 		//administrateur_dao_test.supprimerAdministrateur_test();
 	}
+*/
 }

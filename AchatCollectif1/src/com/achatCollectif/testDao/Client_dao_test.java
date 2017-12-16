@@ -3,10 +3,6 @@ package com.achatCollectif.testDao;
 import java.util.Date;
 import java.util.List;
 
-import com.achatCollectif.dao.Client_dao;
-import com.achatCollectif.dao.Client_daoImp;
-import com.achatCollectif.dao.Sujet_dao;
-import com.achatCollectif.dao.Sujet_daoImp;
 import com.achatCollectif.model.Client;
 
 public class Client_dao_test extends Collections_dao_Test {
@@ -14,7 +10,7 @@ public class Client_dao_test extends Collections_dao_Test {
 	public Client_dao_test(){
 		super();
 	}
-	
+	/*
 	public  void ajouterClient_test(){
 		Client_dao db_client = new Client_daoImp(host, port, dataBaseName);
 		Client myClient1 = new Client("Client1", "Anass", "BH001", "chbanianass@hotmail.com", "passwordClient");
@@ -152,4 +148,5 @@ public class Client_dao_test extends Collections_dao_Test {
 		//client_dao_test.modifierClient_test();
 		//client_dao_test.supprimerClient_test();
 	}
+/**/
 }

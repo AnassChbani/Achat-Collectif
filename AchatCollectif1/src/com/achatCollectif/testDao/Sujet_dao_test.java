@@ -4,12 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.achatCollectif.dao.Categorie_dao;
-import com.achatCollectif.dao.Categorie_daoImp;
-import com.achatCollectif.dao.Client_dao;
-import com.achatCollectif.dao.Client_daoImp;
-import com.achatCollectif.dao.Sujet_dao;
-import com.achatCollectif.dao.Sujet_daoImp;
 import com.achatCollectif.model.Categorie;
 import com.achatCollectif.model.Client;
 import com.achatCollectif.model.Commentaire;
@@ -21,7 +15,7 @@ public class Sujet_dao_test extends Collections_dao_Test {
 	public Sujet_dao_test(){
 		super();
 	}
-	
+	/*
 	public void ajouterSujet_test(){
 		Sujet_dao db_sujet = new Sujet_daoImp(host, port, dataBaseName);
 		List<User> listAdherents = new ArrayList<User>();
@@ -54,6 +48,7 @@ public class Sujet_dao_test extends Collections_dao_Test {
 		Sujet monSujet = new Sujet("libelleSujetTest",
 				"DescriptionSujetTest",
 				900,
+				100,
 				new Date(23,03,1995), 
 				new Date(23,03,2017),
 				"imageProduitTest", 
@@ -188,5 +183,5 @@ public class Sujet_dao_test extends Collections_dao_Test {
 		//sujet_dao_test.getAllSujets_test();
 		System.out.println("=====================================");
 	}
-
+/**/
 }

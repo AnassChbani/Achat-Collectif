@@ -2,8 +2,6 @@ package com.achatCollectif.testDao;
 
 import java.util.List;
 
-import com.achatCollectif.dao.Categorie_dao;
-import com.achatCollectif.dao.Categorie_daoImp;
 import com.achatCollectif.model.Categorie;
 
 public class Categorie_dao_test extends Collections_dao_Test{
@@ -11,6 +9,7 @@ public class Categorie_dao_test extends Collections_dao_Test{
 	public Categorie_dao_test(){
 		super();
 	}
+	/*
 	public static void main(String[] args) {
 		System.out.println("=====================================");
 		Categorie_dao_test categorie_dao_test = new Categorie_dao_test();
@@ -121,4 +120,5 @@ public class Categorie_dao_test extends Collections_dao_Test{
 			System.out.println("TEST:supprimerCategorie : null");
 		}		
 	}
+   /**/
 }

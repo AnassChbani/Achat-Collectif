@@ -1,6 +1,5 @@
 package com.achatCollectif.metier;
 
-import java.util.List;
 
 import com.achatCollectif.model.Categorie;
 import com.achatCollectif.model.Sujet;

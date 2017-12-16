@@ -8,6 +8,7 @@ public class Sujet {
 	private String libelle;
 	private String description;
 	private double prix;
+	private double prixSeuil;
 	private Date dateDepo;
 	private Date dateExtra;
 	private String image;
@@ -21,7 +22,7 @@ public class Sujet {
 	
 	
 	
-	public Sujet(String id, String libelle, String description, double prix,
+	public Sujet(String id, String libelle, String description, double prix, double prixSeuil,
 			Date dateDepo, Date dateExtra, String image, String note, double tauxDiminutionParJour,
 			String idUser, String idCategorie) {
 		super();
@@ -29,6 +30,7 @@ public class Sujet {
 		this.libelle = libelle;
 		this.description = description;
 		this.prix = prix;
+		this.prixSeuil = prixSeuil;
 		this.dateDepo = dateDepo;
 		this.dateExtra = dateExtra;
 		this.image = image;
@@ -36,15 +38,21 @@ public class Sujet {
 		this.tauxDiminutionParJour = tauxDiminutionParJour;
 		this.idUser = idUser;
 		this.idCategorie = idCategorie;
+		if(this.prix>this.prixSeuil){
+			double tmp = this.prixSeuil;
+			this.prixSeuil = this.prix;
+			this.prix = this.prixSeuil;
+		}
 	}
 	
-	public Sujet(String libelle, String description, double prix,
+	public Sujet(String libelle, String description, double prix, double prixSeuil,
 			Date dateDepo, Date dateExtra, String image, String note, double tauxDiminutionParJour,
 			String idUser, String idCategorie) {
 		super();
 		this.libelle = libelle;
 		this.description = description;
 		this.prix = prix;
+		this.prixSeuil = prixSeuil;
 		this.dateDepo = dateDepo;
 		this.dateExtra = dateExtra;
 		this.image = image;
@@ -52,9 +60,14 @@ public class Sujet {
 		this.tauxDiminutionParJour = tauxDiminutionParJour;
 		this.idUser = idUser;
 		this.idCategorie = idCategorie;
+		if(this.prix>this.prixSeuil){
+			double tmp = this.prixSeuil;
+			this.prixSeuil = this.prix;
+			this.prix = this.prixSeuil;
+		}
 	}
 	
-	public Sujet(String id, String libelle, String description, double prix,
+	public Sujet(String id, String libelle, String description, double prix, double prixSeuil,
 			Date dateDepo, Date dateExtra, String image, String note, double tauxDiminutionParJour,
 			String idUser, String idCategorie, List<User> listAdherent,
 			List<Commentaire> listCommentaire) {
@@ -63,6 +76,7 @@ public class Sujet {
 		this.libelle = libelle;
 		this.description = description;
 		this.prix = prix;
+		this.prixSeuil = prixSeuil;
 		this.dateDepo = dateDepo;
 		this.dateExtra = dateExtra;
 		this.image = image;
@@ -72,9 +86,14 @@ public class Sujet {
 		this.idCategorie = idCategorie;
 		this.listAdherent = listAdherent;
 		this.listCommentaire = listCommentaire;
+		if(this.prix>this.prixSeuil){
+			double tmp = this.prixSeuil;
+			this.prixSeuil = this.prix;
+			this.prix = this.prixSeuil;
+		}
 	}
 	
-	public Sujet( String libelle, String description, double prix,
+	public Sujet( String libelle, String description, double prix, double prixSeuil,
 			Date dateDepo, Date dateExtra, String image, String note, double tauxDiminutionParJour,
 			String idUser, String idCategorie, List<User> listAdherent,
 			List<Commentaire> listCommentaire) {
@@ -82,6 +101,7 @@ public class Sujet {
 		this.libelle = libelle;
 		this.description = description;
 		this.prix = prix;
+		this.prixSeuil = prixSeuil;
 		this.dateDepo = dateDepo;
 		this.dateExtra = dateExtra;
 		this.image = image;
@@ -91,17 +111,23 @@ public class Sujet {
 		this.idCategorie = idCategorie;
 		this.listAdherent = listAdherent;
 		this.listCommentaire = listCommentaire;
+		if(this.prix>this.prixSeuil){
+			double tmp = this.prixSeuil;
+			this.prixSeuil = this.prix;
+			this.prix = this.prixSeuil;
+		}
 	}
 	
 	
 	
-	public Sujet(String libelle, String description, double prix,
+	public Sujet(String libelle, String description, double prix, double prixSeuil,
 			Date dateDepo, Date dateExtra, String image, String note,
 			double tauxDiminutionParJour, User user, Categorie categorie) {
 		super();
 		this.libelle = libelle;
 		this.description = description;
 		this.prix = prix;
+		this.prixSeuil = prixSeuil;
 		this.dateDepo = dateDepo;
 		this.dateExtra = dateExtra;
 		this.image = image;
@@ -109,6 +135,11 @@ public class Sujet {
 		this.tauxDiminutionParJour = tauxDiminutionParJour;
 		this.idUser = user.getId();
 		this.idCategorie = categorie.getId();
+		if(this.prix>this.prixSeuil){
+			double tmp = this.prixSeuil;
+			this.prixSeuil = this.prix;
+			this.prix = this.prixSeuil;
+		}
 	}
 
 	public Sujet() {
@@ -138,6 +169,11 @@ public class Sujet {
 	}
 	public void setPrix(double prix) {
 		this.prix = prix;
+		if(this.prix>this.prixSeuil){
+			double tmp = this.prixSeuil;
+			this.prixSeuil = this.prix;
+			this.prix = this.prixSeuil;
+		}
 	}
 	public Date getDateDepo() {
 		return dateDepo;
@@ -222,6 +258,19 @@ public class Sujet {
 				+ ", idUser=" + idUser + ", idCategorie=" + idCategorie
 				+ ", listAdherent=" + listAdherent + ", listCommentaire="
 				+ listCommentaire + "]";
+	}
+
+	public void setPrixSeuil(double prixSeuil) {
+		this.prixSeuil = prixSeuil;
+		if(this.prix>this.prixSeuil){
+			double tmp = this.prixSeuil;
+			this.prixSeuil = this.prix;
+			this.prix = this.prixSeuil;
+		}
+	}
+
+	public double getPrixSeuil() {
+		return prixSeuil;
 	}
 	
 	
