@@ -23,10 +23,15 @@ public class Client_metierImp implements Client_metier {
 	public Client_metierImp(Client client){
 		clientMetier = client;
 		this.dbAccess = new DBAccessImp(HOST, PORT, DATABASENAME);
+		if(client.getId() == null){
+			clientMetier = dbAccess.ajouterClient(client);
+		}
 	}
 	
 	@Override
 	public Sujet creerSujet(Sujet sujet) {
+		System.out.println("setIdUser "+this.clientMetier.getId());
+		sujet.setIdUser(this.clientMetier.getId());
 	     return dbAccess.ajouterSujet(sujet);
 	}
 
@@ -34,10 +39,11 @@ public class Client_metierImp implements Client_metier {
 	public Sujet commenterSujet(Sujet sujet, Commentaire commentaire) {
 		Sujet oldSujet = dbAccess.getSujetByIdFromDB(sujet.getId());
 		Sujet newSujet = oldSujet;
-		List<Commentaire> listComments = newSujet.getListCommentaire();
+		List<Commentaire> listComments = oldSujet.getListCommentaire();
 		if(listComments == null){
 			listComments = new ArrayList<Commentaire>();
 		}
+		commentaire.setProprietaire(this.clientMetier);
 		listComments.add(commentaire);
 		newSujet.setListCommentaire(listComments);
 		return dbAccess.modifierSujet(oldSujet, newSujet);
@@ -59,12 +65,11 @@ public class Client_metierImp implements Client_metier {
 	@Override
 	public Sujet supprimerSonSujet(Sujet sujet) {
 		Sujet sujetDb = dbAccess.getSujetByIdFromDB(sujet.getId());
-		List<User> listAdherents = dbAccess.getAllAdherents(sujet);
+		List<User> listUsers = dbAccess.getAllUsers();
 		
-		for (int i = 0; i < listAdherents.size(); i++) {
-			if(this.clientMetier.getCin().equalsIgnoreCase(listAdherents.get(i).getCin())){
-				return dbAccess.supprimerSujet(sujetDb);
-			}
+		System.out.println("Suppression de son sujet "+ listUsers.size());
+		if(dbAccess.getProprietaire(sujetDb).getCin().equalsIgnoreCase(this.clientMetier.getCin())){
+			return dbAccess.supprimerSujet(sujetDb);
 		}
 		return null;
 	}
@@ -78,15 +83,17 @@ public class Client_metierImp implements Client_metier {
 	}
 
 	@Override
-	public Sujet supprimerSonCommentaire(Sujet sujet, Commentaire commentaire) {
-		List<Commentaire> listCommentaires = sujet.getListCommentaire();
+	public Sujet supprimerSonCommentaire(Sujet sujetDB, Commentaire commentaire) {
+		//Sujet sujetDB = dbAccess.getSujetByIdFromDB(sujet.getId());
+		System.out.println("SujetDb ! "+ sujetDB.toString());
+		List<Commentaire> listCommentaires = sujetDB.getListCommentaire();
+		if(listCommentaires == null) return sujetDB;
 		for (int i = 0; i < listCommentaires.size(); i++) {
-			if(listCommentaires.get(i).equals(commentaire.getProprietaire())){
-				if(listCommentaires.get(i).getProprietaire().equals(this.clientMetier.getId())){
-					Sujet newSujet = sujet;
-					newSujet.getListCommentaire().remove(i);
-					return dbAccess.modifierSujet(sujet, newSujet);
-				}
+			if(listCommentaires.get(i).getProprietaire().getCin().equals(this.clientMetier.getCin())){
+				Sujet newSujet = sujetDB;
+				newSujet.getListCommentaire().remove(i);
+				System.out.println("Removing this fucking comment");
+				return dbAccess.modifierSujet(sujetDB, newSujet);
 			}
 		}
 		return null;

@@ -23,6 +23,9 @@ public class Administrateur_metierImp implements Administrateur_metier {
 	public Administrateur_metierImp(Administrateur administrateur) {
 		this.administrateurMetier = administrateur;
 		dbAccess = new DBAccessImp(HOST, PORT, DATABASENAME);
+		if(administrateur.getId() == null){
+			administrateurMetier = dbAccess.ajouterAdministrateur(administrateur);
+		}
 	}
 	
 	@Override
@@ -42,6 +45,7 @@ public class Administrateur_metierImp implements Administrateur_metier {
 
 	@Override
 	public Sujet creerSujet(Sujet sujet) {
+		sujet.setIdUser(this.administrateurMetier.getId());
 		return dbAccess.ajouterSujet(sujet);
 	}
 
@@ -53,6 +57,7 @@ public class Administrateur_metierImp implements Administrateur_metier {
 		if(listComments == null){
 			listComments = new ArrayList<Commentaire>();
 		}
+		commentaire.setProprietaire(this.administrateurMetier);
 		listComments.add(commentaire);
 		newSujet.setListCommentaire(listComments);
 		return dbAccess.modifierSujet(oldSujet, newSujet);
@@ -87,6 +92,7 @@ public class Administrateur_metierImp implements Administrateur_metier {
 	@Override
 	public Sujet supprimerSonCommentaire(Sujet sujet, Commentaire commentaire) {
 		List<Commentaire> listCommentaires = sujet.getListCommentaire();
+		if(listCommentaires == null) return sujet;
 		for (int i = 0; i < listCommentaires.size(); i++) {
 			if(listCommentaires.get(i).equals(commentaire.getProprietaire())){
 				if(listCommentaires.get(i).getProprietaire().equals(this.administrateurMetier.getId())){

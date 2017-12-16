@@ -174,8 +174,8 @@ public class MyDBImp implements MyDB {
 			return doc;
 		} catch (Exception e) {
 			System.out.println("Ereur de récupération de document");
+			return null;
 		}
-		return null;
 	}
 		
 }

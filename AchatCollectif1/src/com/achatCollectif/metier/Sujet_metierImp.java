@@ -93,7 +93,7 @@ public class Sujet_metierImp implements Sujet_metier {
 
 	@Override
 	public boolean estExpire() {
-		Date dateCourante = new Date();
+		Date dateCourante = (new DateTime()).toDate();
 		Date dateExp = this.sujetMetier.getDateExtra();
 		
 		String duree = Helper.differenceBetxeenTwoDate(dateCourante, dateExp);
