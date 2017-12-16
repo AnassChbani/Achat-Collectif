@@ -1,8 +1,9 @@
 package com.achatCollectif.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Categorie {
+public class Categorie implements Serializable{
 	private String id;
 	private String libelle;
 	

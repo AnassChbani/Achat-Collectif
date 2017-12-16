@@ -1,6 +1,8 @@
 package com.achatCollectif.model;
 
-public class Administrateur extends User{
+import java.io.Serializable;
+
+public class Administrateur extends User implements Serializable{
 
 	public Administrateur() {
 		super();

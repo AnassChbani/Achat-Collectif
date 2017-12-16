@@ -4,14 +4,29 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.websocket.server.PathParam;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import org.joda.time.DateTime;
 
 import com.achatCollectif.dao.DBAccess;
 import com.achatCollectif.dao.DBAccessImp;
 import com.achatCollectif.model.Client;
 import com.achatCollectif.model.Commentaire;
+import com.achatCollectif.model.Commentaires;
 import com.achatCollectif.model.Sujet;
 import com.achatCollectif.model.User;
+import com.achatCollectif.model.Users;
+
+
+@Path("/sujet")
 
 public class Sujet_metierImp implements Sujet_metier {
 
@@ -22,9 +37,33 @@ public class Sujet_metierImp implements Sujet_metier {
 	private Sujet sujetMetier ;
 	DBAccess dbAccess;
 	
+	
+	public Sujet_metierImp(){
+		super();
+		
+	}	
+	
+	
 	public Sujet_metierImp(Sujet sujet){
 		this.sujetMetier = sujet;
 		this.dbAccess = new DBAccessImp(HOST, PORT, DATABASENAME);
+		if(sujet.getId() == null){
+			this.sujetMetier = this.dbAccess.ajouterSujet(sujet);
+		}
+	}
+	
+	
+	@HeaderParam("sujet") Sujet sujet;
+	@PostConstruct
+	public void Sujet_metierImp(){
+		if(sujet == null){
+			sujet = ExempleObjetFront.getSujet();
+		}
+		this.sujetMetier = sujet;
+		this.dbAccess = new DBAccessImp(HOST, PORT, DATABASENAME);
+		if(sujet.getId() == null){
+			this.sujetMetier = this.dbAccess.ajouterSujet(sujet);
+		}
 	}
 	
 	@Override
@@ -44,8 +83,10 @@ public class Sujet_metierImp implements Sujet_metier {
 		}
 	}
 
+	//@POST
+	//@Path("/ajouterAdherent")
 	@Override
-	public User ajouterAdherent(User user) {
+	public User ajouterAdherent(@FormParam("user") User user) {
 		List<User> listAdherents = this.sujetMetier.getListAdherent();
 		if(listAdherents == null){
 			listAdherents = new ArrayList<User>();
@@ -63,8 +104,10 @@ public class Sujet_metierImp implements Sujet_metier {
 		}
 	}
 
+	//@POST
+	//@Path("/ajouterCommentaire")
 	@Override
-	public Commentaire ajouterCommentaire( Commentaire commentaire) {
+	public Commentaire ajouterCommentaire(@FormParam("commentaire") Commentaire commentaire) {
 		Sujet nouveauSujet = this.sujetMetier;
 		List<Commentaire> listCommentaires = nouveauSujet.getListCommentaire();
 		if(listCommentaires == null){
@@ -79,18 +122,23 @@ public class Sujet_metierImp implements Sujet_metier {
 		}
 	}
 
+	@GET
+	@Path("/getDuree")
 	@Override
 	public String getDuree() {
-		Date dateCourante = new DateTime().toDate();
+	/*	Date dateCourante = new DateTime().toDate();
 		Date dateEx = this.sujetMetier.getDateExtra();
 		
 		String duree = null;
 		if(dateCourante != null && dateEx != null)
 			duree = Helper.differenceBetxeenTwoDate(dateCourante, dateEx);
 		return duree;
+		*/
+		return "jhaha";
 	}
 
-
+	//@GET
+	//@Path("/estExpire")
 	@Override
 	public boolean estExpire() {
 		Date dateCourante = (new DateTime()).toDate();
@@ -104,8 +152,10 @@ public class Sujet_metierImp implements Sujet_metier {
 		}
 	}
 
+	//@POST
+	//@Path("/notifier")
 	@Override
-	public boolean notifier(String messageNotification) {
+	public boolean notifier(@FormParam("messageNotification") String messageNotification) {
 		List<User> listAdherent = this.sujetMetier.getListAdherent();
 		boolean sendingMail = false;
 		
@@ -130,15 +180,18 @@ public class Sujet_metierImp implements Sujet_metier {
 		this.sujetMetier = sujetMetier;
 	}
 
+	//@GET
+	//@Path("/ListAdherents")
 	@Override
-	public List<Client_metierImp> getListAdherents() {
-		
-		return null;
+	public Users getListAdherents() {
+		return new Users(this.sujetMetier.getListAdherent());
 	}
 
+	@GET
+	@Path("/ListCommentaires")
 	@Override
-	public List<Commentaire> getListCommentaires() {
-		return this.sujetMetier.getListCommentaire();
+	public Commentaires getListCommentaires() {
+		return new Commentaires(this.sujetMetier.getListCommentaire());
 	}
 	
 	

@@ -1,8 +1,9 @@
 package com.achatCollectif.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Client extends User{
+public class Client extends User implements Serializable{
 
 	public Client() {
 		super();

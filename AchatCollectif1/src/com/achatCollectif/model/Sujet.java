@@ -1,9 +1,10 @@
 package com.achatCollectif.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Sujet {
+public class Sujet  implements Serializable {
 	private String id;
 	private String libelle;
 	private String description;

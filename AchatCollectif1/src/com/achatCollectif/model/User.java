@@ -1,8 +1,9 @@
 package com.achatCollectif.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
 	protected String id;
 	protected String nom;
 	protected String prenom;
