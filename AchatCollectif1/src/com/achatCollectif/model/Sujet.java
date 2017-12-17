@@ -4,20 +4,44 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+
 public class Sujet  implements Serializable {
+	@XmlElement
 	private String id;
+	@XmlElement
 	private String libelle;
+	@XmlElement
 	private String description;
+	@XmlElement
 	private double prix;
+	@XmlElement
 	private double prixSeuil;
+	@XmlElement
 	private Date dateDepo;
+	@XmlElement
 	private Date dateExtra;
+	@XmlElement
 	private String image;
+	@XmlElement
 	private String note;
+	@XmlElement
 	private double tauxDiminutionParJour;
+	@XmlElement
 	private String idUser;
+	@XmlElement
 	private String idCategorie;
+	@XmlElementRef
 	private List<User> listAdherent;
+	@XmlElementRef
 	private List<Commentaire> listCommentaire;
 	
 	

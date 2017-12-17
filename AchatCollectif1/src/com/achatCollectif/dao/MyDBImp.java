@@ -158,6 +158,7 @@ public class MyDBImp implements MyDB {
 		try {
 			DBCollection collection = myDatabase.getCollection(collectionName);
 			collection.update(olddocument, newdocument);
+			//collection.update(query, update)(newdocument);
 			return newdocument;
 		} catch (Exception e) {
 			System.out.println("Erreur d'insertion");

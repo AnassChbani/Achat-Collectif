@@ -3,20 +3,38 @@ package com.achatCollectif.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyAttribute;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.glassfish.jersey.server.JSONP;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+
 public class User implements Serializable {
+	@XmlElement
 	protected String id;
+	@XmlElement
 	protected String nom;
+	@XmlElement
 	protected String prenom;
+	@XmlElement
 	protected String password;
+	@XmlElement
 	protected String cin;
+	@XmlElement
 	protected String email;
+	@XmlElement
     protected boolean estAdmin;
-    protected List<String> list_notification;
+   // protected List<String> list_notification;
 	
 	
 	public User () {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 	public User(String id, String nom, String prenom, String cin, String email, String password) {
 		super();
@@ -52,14 +70,13 @@ public class User implements Serializable {
 				+ ", cin=" + cin + ", email=" + email + "]";
 	}
 	
+	//public List<String> getList_notification() {
+	//	return list_notification;
+	//}
+	//public void setList_notification(List<String> list_notification) {
+	//	this.list_notification = list_notification;
+	//}
 	
-	
-	public List<String> getList_notification() {
-		return list_notification;
-	}
-	public void setList_notification(List<String> list_notification) {
-		this.list_notification = list_notification;
-	}
 	public String getId() {
 		return id;
 	}

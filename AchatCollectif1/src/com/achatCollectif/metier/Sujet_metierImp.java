@@ -6,19 +6,28 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.websocket.server.PathParam;
+import javax.ws.rs.BeanParam;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.xml.ws.RequestWrapper;
 
+import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.glassfish.jersey.process.internal.RequestScoped;
+import org.glassfish.jersey.server.model.ParamQualifier;
 import org.joda.time.DateTime;
+import org.junit.runners.Parameterized.Parameters;
 
 import com.achatCollectif.dao.DBAccess;
 import com.achatCollectif.dao.DBAccessImp;
-import com.achatCollectif.model.Client;
 import com.achatCollectif.model.Commentaire;
 import com.achatCollectif.model.Commentaires;
 import com.achatCollectif.model.Sujet;
@@ -52,22 +61,30 @@ public class Sujet_metierImp implements Sujet_metier {
 		}
 	}
 	
+	@javax.ws.rs.PathParam("idSujet") String idSujet;
 	
-	@HeaderParam("sujet") Sujet sujet;
 	@PostConstruct
 	public void Sujet_metierImp(){
-		if(sujet == null){
-			sujet = ExempleObjetFront.getSujet();
+		Sujet sujet = null;
+		this.dbAccess = new DBAccessImp(HOST, PORT, DATABASENAME);
+		if(idSujet!=null) {
+			sujet = dbAccess.getSujetByIdFromDB(idSujet);
 		}
+		
+		//if(sujet == null){
+		//	sujet = dbAccess.ajouterSujet(ExempleObjetFront.getSujet());
+		//}
 		this.sujetMetier = sujet;
 		this.dbAccess = new DBAccessImp(HOST, PORT, DATABASENAME);
 		if(sujet.getId() == null){
 			this.sujetMetier = this.dbAccess.ajouterSujet(sujet);
 		}
+		System.out.println("Hello : "+this.sujetMetier.toString());
 	}
 	
 	@Override
 	public double diminuerPrix() {
+		
 		double ancienPrix = this.sujetMetier.getPrix();
 		double nouveauPrix = ancienPrix - this.sujetMetier.getTauxDiminutionParJour();
 		if(nouveauPrix < this.sujetMetier.getPrixSeuil()) {
@@ -83,10 +100,13 @@ public class Sujet_metierImp implements Sujet_metier {
 		}
 	}
 
-	//@POST
-	//@Path("/ajouterAdherent")
+	
+	@POST
+	@Path("/{idSujet}/ajouterAdherent")
+	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces(MediaType.APPLICATION_XML)
 	@Override
-	public User ajouterAdherent(@FormParam("user") User user) {
+	public Sujet ajouterAdherent(User user) {	
 		List<User> listAdherents = this.sujetMetier.getListAdherent();
 		if(listAdherents == null){
 			listAdherents = new ArrayList<User>();
@@ -95,19 +115,28 @@ public class Sujet_metierImp implements Sujet_metier {
 		
 		Sujet nouveauSujet = this.sujetMetier;
 		nouveauSujet.setListAdherent(listAdherents);
-		
+		System.out.println("nouveauSujet :"+nouveauSujet.toString());
 		Sujet result = dbAccess.modifierSujet(this.sujetMetier, nouveauSujet);
 		if(result != null){
-			return user;
+			this.sujetMetier =  result; 
+			System.out.println("Added : " +this.sujetMetier.getListAdherent().toString());
+			return this.sujetMetier;
 		}else{
 			return null;
 		}
 	}
-
-	//@POST
-	//@Path("/ajouterCommentaire")
+	
+	
+	
+	//SUCCESSFUL
+	@POST
+	@Path("/{idSujet}/ajouterCommentaire")
+	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces(MediaType.APPLICATION_XML)
 	@Override
-	public Commentaire ajouterCommentaire(@FormParam("commentaire") Commentaire commentaire) {
+	public Sujet ajouterCommentaire( Commentaire commentaire) { //
+		
+		System.out.println(commentaire.toString());
 		Sujet nouveauSujet = this.sujetMetier;
 		List<Commentaire> listCommentaires = nouveauSujet.getListCommentaire();
 		if(listCommentaires == null){
@@ -115,32 +144,38 @@ public class Sujet_metierImp implements Sujet_metier {
 		}
 		listCommentaires.add(commentaire);
 		nouveauSujet.setListCommentaire(listCommentaires);
-		if(dbAccess.modifierSujet(this.sujetMetier, nouveauSujet) != null){
-			return commentaire;
+		Sujet nouveauS = dbAccess.modifierSujet(this.sujetMetier, nouveauSujet);
+		
+		if(nouveauS != null){
+			this.sujetMetier = dbAccess.getSujetByIdFromDB(nouveauS.getId());
+			return this.sujetMetier;
 		}else{
-			return null;			
+            return null;
 		}
 	}
 
+	//SUCCESSFUL
 	@GET
-	@Path("/getDuree")
+	@Path("/{idSujet}/Duree")
+	@Produces(MediaType.TEXT_PLAIN)
 	@Override
 	public String getDuree() {
-	/*	Date dateCourante = new DateTime().toDate();
+		Date dateCourante = new DateTime().toDate();
 		Date dateEx = this.sujetMetier.getDateExtra();
 		
 		String duree = null;
 		if(dateCourante != null && dateEx != null)
 			duree = Helper.differenceBetxeenTwoDate(dateCourante, dateEx);
 		return duree;
-		*/
-		return "jhaha";
 	}
 
-	//@GET
-	//@Path("/estExpire")
+	//SUCCESSFUL
+	@GET
+	@Path("/{idSujet}/Expiration")
+	@Produces(MediaType.TEXT_PLAIN)
 	@Override
 	public boolean estExpire() {
+		
 		Date dateCourante = (new DateTime()).toDate();
 		Date dateExp = this.sujetMetier.getDateExtra();
 		
@@ -151,11 +186,11 @@ public class Sujet_metierImp implements Sujet_metier {
 			return false;
 		}
 	}
-
-	//@POST
-	//@Path("/notifier")
+	
+	//SUCCESSFULL
 	@Override
-	public boolean notifier(@FormParam("messageNotification") String messageNotification) {
+	public boolean notifier( String messageNotification) {	//@HeaderParam("messageNotification") 
+		
 		List<User> listAdherent = this.sujetMetier.getListAdherent();
 		boolean sendingMail = false;
 		
@@ -172,7 +207,11 @@ public class Sujet_metierImp implements Sujet_metier {
 		return sendingMail;
 	}
 
+	@GET
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Path("/{idSujet}/informations")
 	public Sujet getSujetMetier() {
+		System.out.println("getSujetMetier" + sujetMetier.toString());
 		return sujetMetier;
 	}
 
@@ -180,20 +219,24 @@ public class Sujet_metierImp implements Sujet_metier {
 		this.sujetMetier = sujetMetier;
 	}
 
-	//@GET
-	//@Path("/ListAdherents")
+	//SUCCESSFUL
+	@GET
+	@Path("/{idSujet}/lesAdherents")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Override
 	public Users getListAdherents() {
 		return new Users(this.sujetMetier.getListAdherent());
 	}
 
+	//SUCCESSFUL
 	@GET
-	@Path("/ListCommentaires")
+	@Path("/{idSujet}/lesCommentaires")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Override
 	public Commentaires getListCommentaires() {
-		return new Commentaires(this.sujetMetier.getListCommentaire());
-	}
-	
-	
+		
+		Commentaires commentaires = new Commentaires(this.sujetMetier.getListCommentaire());
+		return commentaires;
+	}	
 	
 }

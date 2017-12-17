@@ -8,5 +8,12 @@
 </head>
 <body>
 	
+	<h1>Hello Tester</h1>	
+	<form action="http://localhost:8080/Achat-Collectif/rest/sujet/lesAdherents" method="POST">
+		<input type="submit" value="Tester post" />
+	</form>
+	<form action="http://localhost:8080/Achat-Collectif/rest/sujet/lesAdherents" method="GET">
+		<input type="submit" value="Tester get" />
+	</form>
 </body>
 </html>

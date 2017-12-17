@@ -3,6 +3,8 @@ package com.achatCollectif.metier;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.Path;
+
 import com.achatCollectif.dao.DBAccess;
 import com.achatCollectif.dao.DBAccessImp;
 import com.achatCollectif.model.Categorie;
@@ -27,6 +29,7 @@ public class Client_metierImp implements Client_metier {
 			clientMetier = dbAccess.ajouterClient(client);
 		}
 	}
+	
 	
 	@Override
 	public Sujet creerSujet(Sujet sujet) {
