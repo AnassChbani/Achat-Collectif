@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 
-public class Sujet  implements Serializable {
+public class Sujet implements Serializable {
 	@XmlElement
 	private String id;
 	@XmlElement
@@ -167,10 +167,9 @@ public class Sujet  implements Serializable {
 		}
 	}
 
-	public Sujet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	public Sujet() {	}
+	
+	
 	public String getId() {
 		return id;
 	}

@@ -39,6 +39,8 @@ import com.achatCollectif.model.Users;
 
 public class Sujet_metierImp implements Sujet_metier {
 
+	@javax.ws.rs.PathParam("idSujet") String idSujet;
+	
 	String HOST = "localhost";
 	int PORT = 27017;
 	String DATABASENAME = "AchatCollectif";
@@ -49,9 +51,7 @@ public class Sujet_metierImp implements Sujet_metier {
 	
 	public Sujet_metierImp(){
 		super();
-		
 	}	
-	
 	
 	public Sujet_metierImp(Sujet sujet){
 		this.sujetMetier = sujet;
@@ -61,8 +61,6 @@ public class Sujet_metierImp implements Sujet_metier {
 		}
 	}
 	
-	@javax.ws.rs.PathParam("idSujet") String idSujet;
-	
 	@PostConstruct
 	public void Sujet_metierImp(){
 		Sujet sujet = null;
@@ -70,16 +68,14 @@ public class Sujet_metierImp implements Sujet_metier {
 		if(idSujet!=null) {
 			sujet = dbAccess.getSujetByIdFromDB(idSujet);
 		}
-		
+
 		//if(sujet == null){
 		//	sujet = dbAccess.ajouterSujet(ExempleObjetFront.getSujet());
 		//}
 		this.sujetMetier = sujet;
-		this.dbAccess = new DBAccessImp(HOST, PORT, DATABASENAME);
 		if(sujet.getId() == null){
 			this.sujetMetier = this.dbAccess.ajouterSujet(sujet);
 		}
-		System.out.println("Hello : "+this.sujetMetier.toString());
 	}
 	
 	@Override
@@ -135,21 +131,25 @@ public class Sujet_metierImp implements Sujet_metier {
 	@Produces(MediaType.APPLICATION_XML)
 	@Override
 	public Sujet ajouterCommentaire( Commentaire commentaire) { //
-		
-		System.out.println(commentaire.toString());
 		Sujet nouveauSujet = this.sujetMetier;
+		System.out.println("nouveauSujet0 : ("+nouveauSujet.getListCommentaire().size()+") " +nouveauSujet.getListCommentaire().toString());
 		List<Commentaire> listCommentaires = nouveauSujet.getListCommentaire();
 		if(listCommentaires == null){
 			listCommentaires = new ArrayList<Commentaire>();
 		}
 		listCommentaires.add(commentaire);
 		nouveauSujet.setListCommentaire(listCommentaires);
+		System.out.println("nouveauSujet1 : ("+nouveauSujet.getListCommentaire().size()+") " +nouveauSujet.getListCommentaire().toString());
+		
 		Sujet nouveauS = dbAccess.modifierSujet(this.sujetMetier, nouveauSujet);
+		System.out.println("nouveauS : ("+nouveauS.getListCommentaire().size()+") " +nouveauS.getListCommentaire().toString());
 		
 		if(nouveauS != null){
-			this.sujetMetier = dbAccess.getSujetByIdFromDB(nouveauS.getId());
+			this.sujetMetier = nouveauS;
+			System.out.println("Modifié ("+this.sujetMetier.getListCommentaire().size()+")"+this.sujetMetier.getListCommentaire().toString());
 			return this.sujetMetier;
 		}else{
+			System.out.println("PAs de modification");
             return null;
 		}
 	}

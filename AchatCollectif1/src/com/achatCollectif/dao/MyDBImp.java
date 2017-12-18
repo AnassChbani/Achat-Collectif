@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Query;
 import javax.swing.text.Document;
 
 import com.mongodb.BasicDBObject;
@@ -13,8 +14,11 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.QueryBuilder;
+import com.mongodb.WriteResult;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
+import com.mongodb.client.model.Filters;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class MyDBImp implements MyDB {
@@ -154,14 +158,20 @@ public class MyDBImp implements MyDB {
 	
 	//Modifier une collection
 	public BasicDBObject updateCollection(String collectionName, BasicDBObject olddocument, BasicDBObject newdocument){
-		//System.out.println("Insertion dans la collection");
 		try {
 			DBCollection collection = myDatabase.getCollection(collectionName);
-			collection.update(olddocument, newdocument);
-			//collection.update(query, update)(newdocument);
+			BasicDBObject newDocTmp = new BasicDBObject();
+			BasicDBObject oldDocTmp = new BasicDBObject();
+			
+			oldDocTmp.append("_id", olddocument.getString("_id"));
+			//newDocTmp.append("$set", newdocument);
+
+			collection.remove(oldDocTmp);
+			collection.insert(newdocument);
 			return newdocument;
 		} catch (Exception e) {
-			System.out.println("Erreur d'insertion");
+			System.out.println("Erreur de modification");
+			e.printStackTrace();
 			return null;
 		} 
 	}

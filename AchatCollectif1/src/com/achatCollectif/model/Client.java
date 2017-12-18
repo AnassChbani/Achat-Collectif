@@ -21,6 +21,11 @@ public class Client extends User implements Serializable{
 		this.estAdmin = false;
 	}
 	
+	public Client( User user) {
+		super(user.id, user.nom, user.prenom, user.cin, user.email, user.password);
+		this.estAdmin = false;
+	}
+	
 	public Client(String id, String nom, String prenom, String cin, String email, String password) {
 		super(id, nom, prenom, cin, email, password);
 		this.estAdmin = false;

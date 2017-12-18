@@ -12,7 +12,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 public class Categorie implements Serializable{
+	@XmlElement
 	private String id;
+	@XmlElement
 	private String libelle;
 	
 	
