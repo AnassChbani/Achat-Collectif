@@ -8,6 +8,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -58,45 +59,45 @@ public class Client_metierImp implements Client_metier {
 		}
 	}
 	
-	//@POST
-	//@Path("/{idClient}/creerSujet")
-	//@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	//@Produces(MediaType.APPLICATION_XML)
+	//Not tested but seems working
+	@POST
+	@Path("/{idClient}/creerSujet")
+	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces(MediaType.APPLICATION_XML)
 	@Override
 	public Sujet creerSujet(Sujet sujet) {
-		System.out.println("setIdUser "+this.clientMetier.getId());
 		sujet.setIdUser(this.clientMetier.getId());
-	     return dbAccess.ajouterSujet(sujet);
+	    return dbAccess.ajouterSujet(sujet);
 	}
 
+	//Not tested but seems working
+	@POST
+	@Path("/{idClient}/{idSujet}/{txtCommentaire}")
+	@Produces(MediaType.APPLICATION_XML)
 	@Override
-	public Sujet commenterSujet(Sujet sujet, Commentaire commentaire) {
-		Sujet oldSujet = dbAccess.getSujetByIdFromDB(sujet.getId());
-		Sujet newSujet = oldSujet;
-		List<Commentaire> listComments = oldSujet.getListCommentaire();
-		if(listComments == null){
-			listComments = new ArrayList<Commentaire>();
-		}
-		commentaire.setProprietaire(this.clientMetier);
-		listComments.add(commentaire);
-		newSujet.setListCommentaire(listComments);
-		return dbAccess.modifierSujet(oldSujet, newSujet);
+	public Sujet commenterSujet(@PathParam("idSujet")  String idSujet, @PathParam("txtCommentaire") String txtCommentaire) {
+		Sujet sujet = dbAccess.getSujetByIdFromDB(idSujet);
+		Commentaire commentaire = new Commentaire(txtCommentaire, this.clientMetier);
+		Sujet_metier sujetMetier = new Sujet_metierImp(sujet);
+		return sujetMetier.ajouterCommentaire(commentaire);
 	}
 
-	//@POST
-	//@Path("/{idClient}/commenterSujet")
-	//@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	//@Produces(MediaType.APPLICATION_XML)
+	//Not tested but seems working
+	@POST
+	@Path("/{idClient}/adhererSujet")
+	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces(MediaType.APPLICATION_XML)
 	@Override
 	public Sujet adhererAUnSujet(Sujet sujet) {
 		Sujet_metier sujetMetier = new Sujet_metierImp(sujet);
 		return sujetMetier.ajouterAdherent(this.clientMetier);
 	}
 
-	//@POST
-	//@Path("/{idClient}/supprimerSujet")
-	//@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	//@Produces(MediaType.APPLICATION_XML)
+	//Not tested but seems working
+	@POST
+	@Path("/{idClient}/supprimerSujet")
+	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces(MediaType.APPLICATION_XML)
 	@Override
 	public Sujet supprimerSonSujet(Sujet sujet) {
 		Sujet sujetDb = dbAccess.getSujetByIdFromDB(sujet.getId());
@@ -106,22 +107,24 @@ public class Client_metierImp implements Client_metier {
 		return null;
 	}
 
-	//@POST
-	//@Path("/{idClient}/modierSujet")
-	//@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	//@Produces(MediaType.APPLICATION_XML)
+	//Not tested but seems working
+	@POST
+	@Path("/{idClient}/modierSujet")
+	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces(MediaType.APPLICATION_XML)
 	@Override
-	public Sujet modifierSonSujet(Sujet oldSujet, Sujet newSujet) {
-		if(oldSujet.getPropietaire().equals(this.clientMetier.getId())){
-			return dbAccess.modifierSujet(oldSujet, newSujet);
+	public Sujet modifierSonSujet(Sujet sujet) {
+		if(sujet.getPropietaire().equals(this.clientMetier.getId())){
+			return dbAccess.modifierSujet(sujet, sujet);
 		}
 		return null;
 	}
 
-	//@POST
-	//@Path("/{idClient}/supprimerCommentaire")
-	//@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	//@Produces(MediaType.APPLICATION_XML)
+	//Not tested but seems working
+	@POST
+	@Path("/{idClient}/supprimerCommentaire")
+	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces(MediaType.APPLICATION_XML)
 	@Override
 	public Sujet supprimerSonCommentaire(Sujet sujetDB, Commentaire commentaire) {
 		List<Commentaire> listCommentaires = sujetDB.getListCommentaire();
@@ -141,6 +144,9 @@ public class Client_metierImp implements Client_metier {
 		return true;
 	}
 	
+	@GET
+	@Path("/{idClient}/lesCategories")
+	@Produces(MediaType.APPLICATION_XML)
 	@Override
 	public List<Categorie> getAllCategories() {
 		return dbAccess.getAllCategories();

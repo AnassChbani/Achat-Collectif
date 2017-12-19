@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -31,11 +32,8 @@ public class Administrateur_metierImp implements Administrateur_metier {
 	Administrateur administrateurMetier ;
 	DBAccess dbAccess;
 	
-	
-	
 	public Administrateur_metierImp() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Administrateur_metierImp(Administrateur administrateur) {
@@ -48,6 +46,7 @@ public class Administrateur_metierImp implements Administrateur_metier {
 	
 	@PostConstruct
 	public void Administrateur_metierImp() {
+		System.out.println("Appel PostConstruct");
 		User user = null;
 		this.dbAccess = new DBAccessImp(HOST, PORT, DATABASENAME);
 		if(idAdministrateur!=null) {
@@ -61,16 +60,17 @@ public class Administrateur_metierImp implements Administrateur_metier {
 		}
 	}
 	
+	//Woking successfully
 	@POST
 	@Path("/{idAdministrateur}/ajouterCategorie")
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Produces(MediaType.APPLICATION_XML)
 	@Override
-	public Categorie ajouterCategorie(Categorie categorie) {
+	public Categorie ajouterCategorie(String txtcategrie) {
+		Categorie categorie = new Categorie(txtcategrie);
 		return dbAccess.ajouterCategorie(categorie);
 	}
 	
-	
+	//Woking successfully
 	@POST
 	@Path("/{idAdministrateur}/supprimerSujet")
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -79,16 +79,19 @@ public class Administrateur_metierImp implements Administrateur_metier {
 	public Sujet supprimerUnSujet(Sujet sujet) {
 		return dbAccess.supprimerSujet(sujet);
 	}
-
+	
+	//Woking successfully
 	@POST
 	@Path("/{idAdministrateur}/modifierSujet")
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Produces(MediaType.APPLICATION_XML)
 	@Override
-	public Sujet modifierUnSujet(Sujet oldSujet, Sujet newSujet) {
-		return dbAccess.modifierSujet(oldSujet, newSujet);
+	public Sujet modifierUnSujet(Sujet sujet) {
+		System.out.println("MODIFICATION SUJET : "+sujet.toString());
+		return dbAccess.modifierSujet(sujet, sujet); 
 	}
 
+	//Woking successfully
 	@POST
 	@Path("/{idAdministrateur}/creerSujet")
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -99,16 +102,21 @@ public class Administrateur_metierImp implements Administrateur_metier {
 		return dbAccess.ajouterSujet(sujet);
 	}
 
+	//Working successfully
 	@POST
-	@Path("/{idAdministrateur}/commenterSujet")
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Path("/{idAdministrateur}/{idSujet}/{txtCommentaire}")
 	@Produces(MediaType.APPLICATION_XML)
 	@Override
-	public Sujet commenterSujet(Sujet sujet, Commentaire commentaire) {
+	public Sujet commenterSujet(@PathParam("idSujet") String idSujet, @PathParam("txtCommentaire") String txtCommentaire) {
+		Sujet sujet = dbAccess.getSujetByIdFromDB(idSujet);
+		Commentaire commentaire = new Commentaire(txtCommentaire, this.administrateurMetier);
+		
 		Sujet_metier sujetMetier = new Sujet_metierImp(sujet);
+		
 		return sujetMetier.ajouterCommentaire(commentaire);
 	}
 
+	//Working successfully
 	@POST
 	@Path("/{idAdministrateur}/adhererSujet")
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -119,29 +127,29 @@ public class Administrateur_metierImp implements Administrateur_metier {
 		return sujetMetier.ajouterAdherent(this.administrateurMetier);
 	}
 
-	@POST
-	@Path("/{idAdministrateur}/supprimerSujet")
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@Produces(MediaType.APPLICATION_XML)
+	//@POST
+	//@Path("/{idAdministrateur}/supprimerSujet")
+	//@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	//@Produces(MediaType.APPLICATION_XML)
 	@Override
 	public Sujet supprimerSonSujet(Sujet sujet) {
 		return supprimerUnSujet(sujet);
 	}
 	
 	
-	@POST
-	@Path("/{idAdministrateur}/modifierSujet")
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	@Produces(MediaType.APPLICATION_XML)
+	//@POST
+	//@Path("/{idAdministrateur}/modifierSujet")
+	//@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	//@Produces(MediaType.APPLICATION_XML)
 	@Override
-	public Sujet modifierSonSujet(Sujet oldSujet, Sujet newSujet) {
-		if(oldSujet.getPropietaire().equals(this.administrateurMetier.getId())){
-			return dbAccess.modifierSujet(oldSujet, newSujet);
+	public Sujet modifierSonSujet(Sujet sujet) {
+		if(sujet.getPropietaire().equals(this.administrateurMetier.getId())){
+			return dbAccess.modifierSujet(sujet, sujet);
 		}
 		return null;
 	}
 
-	
+	//Not tested
 	@POST
 	@Path("/{idAdministrateur}/supprimerCommentaire")
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -167,9 +175,9 @@ public class Administrateur_metierImp implements Administrateur_metier {
 		return true;
 	}
 
-	@POST
+	//Working successfully
+	@GET
 	@Path("/{idAdministrateur}/lesCategories")
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Produces(MediaType.APPLICATION_XML)
 	@Override
 	public List<Categorie> getAllCategories() {
@@ -184,9 +192,14 @@ public class Administrateur_metierImp implements Administrateur_metier {
 		this.administrateurMetier = administrateurMetier;
 	}
 
+	//Working successfully
+	@GET
+	@Path("/{idAdministrateur}/informations")
+	@Produces(MediaType.APPLICATION_XML)
 	@Override
 	public User getInformations() {
 		return (User)this.administrateurMetier;
 	}
 
 }
+ 

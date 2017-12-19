@@ -122,8 +122,6 @@ public class Sujet_metierImp implements Sujet_metier {
 		}
 	}
 	
-	
-	
 	//SUCCESSFUL
 	@POST
 	@Path("/{idSujet}/ajouterCommentaire")

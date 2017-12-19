@@ -10,10 +10,10 @@ import com.achatCollectif.model.User;
 
 public interface Client_metier {
 	public Sujet creerSujet(Sujet sujet);
-	public Sujet commenterSujet(Sujet sujet, Commentaire commentaire);
+	public Sujet commenterSujet(String idSujet, String txtCommentaire);
 	public Sujet adhererAUnSujet(Sujet sujet);
 	public Sujet supprimerSonSujet(Sujet sujet);
-	public Sujet modifierSonSujet(Sujet oldSujet, Sujet newSujet);
+	public Sujet modifierSonSujet(Sujet sujet);
 	public Sujet supprimerSonCommentaire(Sujet sujet, Commentaire commentaire);
 	public List<Categorie> getAllCategories();
 	public boolean setNouvelleNotification();

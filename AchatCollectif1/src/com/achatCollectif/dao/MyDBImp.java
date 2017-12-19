@@ -147,7 +147,11 @@ public class MyDBImp implements MyDB {
 		//System.out.println("Suppression du document :"+collectionName);
 		try {
 			DBCollection collection = myDatabase.getCollection(collectionName);
-			collection.remove(document);
+
+
+			BasicDBObject removeDoc = new BasicDBObject();
+			removeDoc.append("_id", document.getString("_id"));
+			collection.remove(removeDoc);
 			return true;
 		} catch (Exception e) {
 			System.out.println("Erreur d'insertion");
